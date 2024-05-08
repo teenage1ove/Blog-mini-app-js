@@ -1,0 +1,130 @@
+@import url(https://fonts.googleapis.com/css?family=Unbounded:200,300,regular,500,600,700,800,900);
+
+*{
+    font-family: "Unbounded", sans-serif;
+}
+
+body,h2,p,ul,li {
+    margin: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #945aff;
+}
+
+.container {
+    padding: 20px 100px;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 0.6fr 1fr;
+    box-sizing: border-box;
+    gap: 1rem;
+}
+
+.editor {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    &__title {
+        font-size: 30px;
+    }
+
+    &__input {
+        padding: 15px;
+        border: none;
+        border-radius: 15px;
+        font-size: 18px;
+        border:1px solid blue;
+        outline: none;
+    }
+
+    &__area {
+        padding: 20px 15px;
+        font-size: 16px;
+        resize: none;
+    }
+
+    &__button {
+        padding: 15px;
+        background-color: blue;
+        border: none;
+        border-radius: 15px;
+        font-size: 20px;
+        color: #fff;
+        text-transform: uppercase;
+        border:1px solid rgb(255, 255, 255);
+        
+        &:hover {
+            filter: brightness(90%);
+        }
+    }
+
+    &__error {
+        color: red;
+        display: block;
+
+        &_hidden {
+            display: none;
+        }
+    }
+}
+
+.list {
+
+    &__title {
+        font-size: 30px;
+    }
+
+    &__prev-text {
+        color: #3f3f3f;
+        margin-top: 20px;
+	}
+
+
+    &__post {
+        margin: 25px 0;
+        background-color: white;
+        border-radius: 15px;
+        padding: 10px;
+        position: relative;
+
+        &-title {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        &-text {
+            font-weight: 400;
+            font-size: 16px;
+        }
+
+        &-date {
+            font-size: 16px;
+            font-weight: 300;
+            color: #424242;
+            margin-bottom: 5px;
+        }
+        
+        &-close {
+            position: absolute;
+            right: -3px;
+            top: -16px;
+
+            &:hover {
+                color: #343434;
+            }
+        }
+    }
+
+}
+
+.not {
+    cursor: not-allowed;
+    background-color: #3f3f3f;
+}
