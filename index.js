@@ -6,6 +6,8 @@ const newPostBtnNode = document.querySelector('.editor__button')
 const postsNode = document.querySelector('.list__content')
 const errorNode = document.querySelector('.editor__error')
 
+newPostBtnNode.classList.add('not')
+
 document.addEventListener('click', (e) => {
     let cur = e.target
     if (cur.tagName === 'I') {
@@ -17,50 +19,6 @@ document.addEventListener('click', (e) => {
     }
 })
 
-postTitleInputNode.addEventListener('input',() => {
-    validation()
-})
-
-postTextInputNode.addEventListener('input',() => {
-    validation()
-})
-
-function validation () {
-    let titleLength = postTitleInputNode.value.length
-    let textLength = postTextInputNode.value.length
-
-    
-
-    if (textLength == 0) {
-        errorNode.innerText = `Введите текст`
-        newPostBtnNode.classList.add("not")
-        errorNode.classList.remove('editor__error_hidden')
-        return
-    }
-
-    if (titleLength > 20) {
-        errorNode.innerText = `Длина не может быть больше 20 `
-        errorNode.classList.remove('editor__error_hidden')
-        return
-    }
-
-    if (titleLength == 0) {
-        errorNode.innerText = `Введите заголовок`
-        errorNode.classList.remove('editor__error_hidden')
-        newPostBtnNode.classList.add("not")
-        return
-    }
-
-    if (textLength > 90) {
-        errorNode.innerText = `Длина не может быть больше 90 `
-        errorNode.classList.remove('editor__error_hidden')
-        return
-    }
-
-    errorNode.classList.add('editor__error_hidden')
-    newPostBtnNode.classList.remove("not")
-}
-
 newPostBtnNode.addEventListener('click', () => {
     let titleLength = postTitleInputNode.value.length
     let textLength = postTextInputNode.value.length
@@ -68,9 +26,9 @@ newPostBtnNode.addEventListener('click', () => {
     const postFromUser = getPostFromUser()
     if (titleLength !== 0 && textLength !== 0) {
         addPost (postFromUser)
-        newPostBtnNode.classList.remove("not")
         postTitleInputNode.value = ''
         postTextInputNode.value = ''
+        newPostBtnNode.classList.add('not')
     }
     
 })
@@ -89,7 +47,7 @@ function getPostFromUser() {
 function addPost({title, text}) {
     let id = 0
     const currentDate = new Date()
-    const dt = `${currentDate.toLocaleDateString()}`
+    const dt = `${currentDate.toLocaleDateString()} ${currentDate.getHours()}:${currentDate.getMinutes() < 10 ? '0' + currentDate.getMinutes() : currentDate.getMinutes()}`
     posts.push({
         id,
         dt,
@@ -123,4 +81,43 @@ function renderPost() {
     }
 
     postsNode.innerHTML = str
+}
+
+
+postTitleInputNode.addEventListener('input',validation)
+postTextInputNode.addEventListener('input',validation)
+
+
+function validation () {
+    let titleLength = postTitleInputNode.value.length
+    let textLength = postTextInputNode.value.length
+
+    if (textLength == 0) {
+        errorNode.innerText = `Введите текст`
+        newPostBtnNode.classList.add("not")
+        errorNode.classList.remove('editor__error_hidden')
+        return
+    }
+
+    if (titleLength > 20) {
+        errorNode.innerText = `Длина не может быть больше 20 `
+        errorNode.classList.remove('editor__error_hidden')
+        return
+    }
+
+    if (titleLength == 0) {
+        errorNode.innerText = `Введите заголовок`
+        errorNode.classList.remove('editor__error_hidden')
+        newPostBtnNode.classList.add("not")
+        return
+    }
+
+    if (textLength > 90) {
+        errorNode.innerText = `Длина не может быть больше 90 `
+        errorNode.classList.remove('editor__error_hidden')
+        return
+    }
+
+    errorNode.classList.add('editor__error_hidden')
+    newPostBtnNode.classList.remove("not")
 }
