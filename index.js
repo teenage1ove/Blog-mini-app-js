@@ -8,15 +8,29 @@ const errorNode = document.querySelector('.editor__error')
 
 newPostBtnNode.classList.add('not')
 
+function validationPostText() {
+    if (postsNode.innerText === '') {
+        postsNode.innerHTML = '<p class="list__prev-text">Тут пока все пусто</p>'
+    }
+}
+
+function setLocalStorage() {
+    window.localStorage.setItem('posts', JSON.stringify(posts))
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    validationPostText()
+})
+
 document.addEventListener('click', (e) => {
     let cur = e.target
     if (cur.tagName === 'I') {
         cur.parentNode.remove()
         posts.splice(Number(cur.dataset.id),1)
+        setLocalStorage()
     }
-    if (postsNode.innerText === '') {
-        postsNode.innerHTML = '<p class="list__prev-text">Тут пока все пусто</p>'
-    }
+    validationPostText()
+    
 })
 
 newPostBtnNode.addEventListener('click', () => {
@@ -32,7 +46,7 @@ newPostBtnNode.addEventListener('click', () => {
     }
     
 })
-
+renderPost()
 
 function getPostFromUser() {
     const title = postTitleInputNode.value
@@ -54,16 +68,14 @@ function addPost({title, text}) {
         title,
         text,
     })
+    setLocalStorage()
     renderPost()
     id+=1
 }
 
-function getPosts() {
-    return posts
-}
 
 function renderPost() {
-    const posts = getPosts()
+    posts = JSON.parse(window.localStorage.getItem('posts'))
 
     let str = posts.map(i => {
         return toHTML(i)
